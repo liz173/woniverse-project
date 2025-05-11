@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us - Woniverse</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f2f0f7;
+      transition: background-color 0.3s ease;
+    }
+
+    nav {
+      background-color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 40px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .nav-left img {
+      height: 50px;
+    }
+
+    .nav-links a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .nav-links a.active::after {
+      content: "";
+      display: block;
+      height: 2px;
+      background-color: #333;
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+    }
+
+    .settings-menu {
+      position: relative;
+    }
+
+    .settings-btn {
+      background: none;
+      border: none;
+      font-size: 16px;
+      font-weight: 500;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .settings-btn:hover {
+      color: #7d5a50;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 50px;
+      width: 250px;
+      background: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      padding: 10px;
+      z-index: 1000;
+    }
+
+    .dropdown .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .dropdown .user-info img {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+    }
+
+    .dropdown .user-info p {
+      font-size: 12px;
+      color: #666;
+      margin: 0;
+    }
+
+    .dropdown ul {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0 0 0;
+    }
+
+    .dropdown ul li {
+      padding: 8px 10px;
+      cursor: pointer;
+    }
+
+    .dropdown ul li a {
+      text-decoration: none;
+      color: #333;
+      display: block;
+    }
+
+    .dropdown ul li a:hover {
+      background-color: #f0f0f0;
+    }
+
+    .about-banner {
+      background: linear-gradient(to right, #1a1a1a 50%, #7c6655 50%);
+      color: #fff;
+      padding: 50px 0;
+      text-align: center;
+    }
+
+    .about-banner h1 {
+      font-size: 72px;
+      margin: 0;
+      font-weight: 900;
+    }
+
+    .about-content {
+      display: flex;
+      padding: 40px;
+      background-color: white;
+      max-width: 1000px;
+      margin: 0 auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .about-image img {
+      width: 260px;
+      height: auto;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .about-text {
+      padding-left: 40px;
+      color: #333;
+    }
+
+    .about-text h2 {
+      margin-top: 0;
+      font-size: 24px;
+    }
+
+    .about-text ul {
+      padding-left: 20px;
+    }
+
+    .about-text ul li {
+      margin-bottom: 10px;
+    }
+
+    body.dark-mode {
+      background-color: #121212;
+      color: #eee;
+    }
+
+    .about-content.dark-content {
+      background-color: #1e1e1e;
+      color: #eee;
+      box-shadow: 0 4px 10px rgba(255, 255, 255, 0.05);
+      border: 1px solid #2a2a2a;
+    }
+
+    .about-banner.dark-banner {
+      background: linear-gradient(to right, #333 50%, #5a4d42 50%);
+    }
+
+    body.dark-mode .about-text {
+      color: #eee;
+    }
+
+    body.dark-mode .about-text h2 {
+      color: #fff;
+    }
+
+    body.dark-mode .about-text ul li {
+      color: #ddd;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <div class="nav-left">
+      <img src="https://private-user-images.githubusercontent.com/187833159/442473620-ca565014-2b53-4eb5-b4c5-3f7d48862ab7.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDY5MzczNDAsIm5iZiI6MTc0NjkzNzA0MCwicGF0aCI6Ii8xODc4MzMxNTkvNDQyNDczNjIwLWNhNTY1MDE0LTJiNTMtNGViNS1iNGM1LTNmN2Q0ODg2MmFiNy5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNTExJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDUxMVQwNDE3MjBaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0wYTQ1NjIyY2NmZjU1NThlMzkwNGZiMTkyNTE4NDQxNDlkMzVjOWFkZmJhMjA4NjljZTRiYzEyNTViMTI3ZWYwJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.W1xFADe7i6YKRjrO1eE_IdM7oRYKN7WXhPTrzUJM-a4" alt="Woniverse Logo" />
+      <div class="nav-links">
+        <a href="home.html">Home</a>
+        <a href="library.html">Library</a>
+        <a href="aboutus.html" class="active">About Us</a>
+        <a href="feedback.html">Feedback</a>
+      </div>
+    </div>
+    <div class="settings-menu">
+      <button class="settings-btn" onclick="toggleDropdown()">⚙️ Settings</button>
+      <div class="dropdown" id="settingsDropdown">
+        <div class="user-info">
+          <img id="dropdownProfilePic" src="https://i.pravatar.cc/40" alt="Profile Picture">
+          <div>
+            <strong id="dropdownName">Liz</strong>
+            <p id="dropdownEmail">lizettemacalindol@gmail.com</p>
+          </div>
+        </div>
+        <ul>
+          <li><a href="settings.html">📝 Edit profile</a></li>
+          <li><a href="settings.html">⚙️ Preferences</a></li>
+          <li><a href="settings.html" onclick="toggleNightMode()">🌙 Night Mode</a></li>
+          <li><a href="settings.html">❓ Help Center</a></li>
+          <li><a href="settings.html">🚪 Sign out</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Banner -->
+  <div class="about-banner" id="aboutBanner">
+    <h1>ABOUT US!</h1>
+  </div>
+
+  <!-- About Content -->
+  <div class="about-content" id="aboutContent">
+    <div class="about-image">
+      <img src="https://i.pinimg.com/736x/f1/c5/9e/f1c59eced973d32a87197516f34a410c.jpg" alt="Author's Photo" />
+    </div>
+    <div class="about-text">
+      <h2>WONIVERSE</h2>
+      <p>Welcome to Woniverse, where words come to life and stories find their home...</p>
+      <h2>MY JOURNEY</h2>
+      <p>Writing has always been more than just words on a page—it’s a way to explore new worlds...</p>
+      <h2>WHAT YOU’LL FIND HERE</h2>
+      <ul>
+        <li>A collection of my books spanning Romance, Thriller, Action, etc.</li>
+        <li>Exclusive insights into my writing process and inspirations.</li>
+        <li>Updates on upcoming releases, projects, and behind-the-scenes content.</li>
+        <li>A space for readers to connect, share thoughts, and be part of the Woniverse community.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    function toggleDropdown() {
+      const dropdown = document.getElementById("settingsDropdown");
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    }
+
+    function toggleNightMode() {
+      document.body.classList.toggle("dark-mode");
+      document.getElementById("aboutBanner").classList.toggle("dark-banner");
+      document.getElementById("aboutContent").classList.toggle("dark-content");
+    }
+
+    document.addEventListener("click", function (event) {
+      const isClickInside = document.querySelector(".settings-menu").contains(event.target);
+      if (!isClickInside) {
+        document.getElementById("settingsDropdown").style.display = "none";
+      }
+    });
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const data = JSON.parse(localStorage.getItem("profileData"));
+      if (data) {
+        document.getElementById("dropdownProfilePic").src = data.image || "https://i.pravatar.cc/40";
+        document.getElementById("dropdownName").textContent = data.name || "User";
+        document.getElementById("dropdownEmail").textContent = data.email || "email@example.com";
+      }
+    });
+  </script>
+</body>
+</html>
