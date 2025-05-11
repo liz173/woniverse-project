@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Good Girls - Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f1eff5;
+      color: #333;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 45px;
+      height: 45px;
+      margin: 30px 40px 0;
+      border-radius: 50%;
+      background-color: #7d5a50;
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      transition: background 0.3s ease, transform 0.2s;
+    }
+
+    .back-button:hover {
+      background-color: #5a403a;
+      transform: scale(1.05);
+    }
+
+    .preview-container {
+      max-width: 900px;
+      margin: 20px auto 50px;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      gap: 30px;
+    }
+
+    .preview-container img {
+      width: 300px;
+      height: 100%;
+      border-radius: 8px;
+    }
+
+    .book-info {
+      flex: 1;
+    }
+
+    .book-info h1 {
+      font-family: 'Raleway', sans-serif;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .book-info .genre {
+      background-color: #7d5a50;
+      color: white;
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      margin-bottom: 20px;
+    }
+
+    .book-info p {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .start-reading {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 20px;
+      background-color: #7d5a50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+
+    .start-reading:hover {
+      background-color: #5a403a;
+    }
+
+    @media (max-width: 768px) {
+      .preview-container {
+        flex-direction: column;
+        align-items: center;
+        margin: 20px;
+      }
+
+      .preview-container img {
+        width: 100%;
+        max-width: 300px;
+      }
+
+      .book-info {
+        text-align: center;
+      }
+
+      .back-button {
+        margin: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="library.html" class="back-button" title="Back to Library">🡸</a>
+
+  <div class="preview-container">
+    <img src="https://private-user-images.githubusercontent.com/187833159/442473660-214e3436-c5da-41d1-9e5b-48f1e50003ca.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDY5Mzc5MDcsIm5iZiI6MTc0NjkzNzYwNywicGF0aCI6Ii8xODc4MzMxNTkvNDQyNDczNjYwLTIxNGUzNDM2LWM1ZGEtNDFkMS05ZTViLTQ4ZjFlNTAwMDNjYS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNTExJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDUxMVQwNDI2NDdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT03MjhkNjM1M2IwOGNjMWVkZWI0NzMyYTI2YzE5MWU2N2ZhNWRjMTU0MDI0YjEwNWY3Yjc5NmI5NTE1ZTAwNGY1JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.MjOK2-33f-EyggDol9uSLCxFvUp-ji0YytgNtfIREA4" alt="Good Girls Cover" />
+    <div class="book-info">
+      <h1>Good Girls</h1>
+      <div class="genre">Thriller</div>
+      <p>
+        When the Tanaka siblings discover a hidden past filled with betrayal, they vow to uncover the truth. But revenge comes at a cost—and not everyone gets out alive.
+      </p>
+      <a href="https://www.wattpad.com/story/373215658-good-girls" class="start-reading" target="_blank">Start Reading</a>
+    </div>
+  </div>
+
+</body>
+</html>
