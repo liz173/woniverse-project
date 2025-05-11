@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lady Bodyguard - Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f1eff5;
+      color: #333;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 45px;
+      height: 45px;
+      margin: 30px 40px 0;
+      border-radius: 50%;
+      background-color: #7d5a50;
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      transition: background 0.3s ease, transform 0.2s;
+    }
+
+    .back-button:hover {
+      background-color: #5a403a;
+      transform: scale(1.05);
+    }
+
+
+    .preview-container {
+      max-width: 900px;
+      margin: 50px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      gap: 30px;
+    }
+
+    .preview-container img {
+      width: 300px;
+      height: 100%;
+      border-radius: 8px;
+    }
+
+    .book-info {
+      flex: 1;
+    }
+
+    .book-info h1 {
+      font-family: 'Raleway', sans-serif;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .book-info .genre {
+      background-color: #7d5a50;
+      color: white;
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      margin-bottom: 20px;
+    }
+
+    .book-info p {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .start-reading {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 20px;
+      background-color: #7d5a50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+
+    .start-reading:hover {
+      background-color: #5a403a;
+    }
+
+    @media (max-width: 768px) {
+      .preview-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .preview-container img {
+        width: 100%;
+        max-width: 300px;
+      }
+
+      .book-info {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+    <a href="library.html" class="back-button" title="Back to Library">🡸</a>
+
+  <div class="preview-container">
+    <img src="https://private-user-images.githubusercontent.com/187833159/442475638-d3fe6e2e-6995-40db-b5df-c8378ae0cecd.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDY5MzgzNjEsIm5iZiI6MTc0NjkzODA2MSwicGF0aCI6Ii8xODc4MzMxNTkvNDQyNDc1NjM4LWQzZmU2ZTJlLTY5OTUtNDBkYi1iNWRmLWM4Mzc4YWUwY2VjZC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNTExJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDUxMVQwNDM0MjFaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT01Y2FhYTQwMzAyZGQ3MTU2OTE0YWY0NGI2NjY1MzA0OWE2OGQxYzk2OTNjM2RiYjNjY2YwZjQ5ZTc3MjQ2MTRiJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.Bcl0tYModG0Z_iBHmcITTGtb4WiUk1N2TWYKTpabIYg" alt="Lady Bodyguard Cover" />
+    <div class="book-info">
+      <h1>Lady Bodyguard</h1>
+      <div class="genre">Romance</div>
+      <p>
+        A fierce and skilled female bodyguard is hired to protect a young CEO who isn’t used to being told what to do—especially not by a woman. As danger draws closer, so does the undeniable chemistry between them.
+        <br/><br/>
+        But can love survive in a world full of secrets, power, and betrayal?
+      </p>
+      <a href="https://www.wattpad.com/story/236228139-lady-bodyguard" class="start-reading" target="_blank">Start Reading</a>
+    </div>
+  </div>
+
+</body>
+</html>
