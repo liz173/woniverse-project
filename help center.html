@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile Settings</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      margin: 0;
+      background-color: #f7f6fb;
+      display: flex;
+      height: 100vh;
+      color: #333;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .sidebar {
+      width: 250px;
+      background-color: #262626;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar li {
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .sidebar li:hover,
+    .sidebar li.active {
+      background-color: #444;
+    }
+    .user-info {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-top: 20px;
+      border-top: 1px solid #444;
+    }
+    .container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px;
+      overflow-y: auto;
+    }
+    form {
+      width: 100%;
+      max-width: 500px;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .profile-image {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      background-color: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .profile-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+    form input,
+    form select,
+    form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    form label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+    }
+    form button {
+      padding: 10px 20px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .error {
+      color: red;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    body.dark-mode {
+      background-color: #121212;
+      color: #f0f0f0;
+    }
+
+    body.dark-mode .sidebar {
+      background-color: #1e1e1e;
+      color: #ffffff;
+    }
+
+    body.dark-mode form {
+      background-color: #1e1e1e;
+      color: #ffffff;
+    }
+
+    body.dark-mode input,
+    body.dark-mode select,
+    body.dark-mode textarea {
+      background-color: #2a2a2a;
+      color: #ffffff;
+      border: 1px solid #444;
+    }
+
+    body.dark-mode label {
+      color: #ddd;
+    }
+
+    body.dark-mode button {
+      background-color: #444;
+      color: #fff;
+    }
+
+    body.dark-mode .error {
+      color: #ff7b7b;
+    }
+
+    .help-center {
+      display: none;
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .help-center h2 {
+      text-align: center;
+    }
+    .help-center ul {
+      list-style: none;
+      padding: 0;
+    }
+    .help-center li {
+      margin-bottom: 15px;
+    }
+    .help-center a {
+      color: #333;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .help-center a:hover {
+      text-decoration: underline;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <ul>
+      <li class="active" onclick="navigate(event, 'edit')">Edit Profile</li>
+      <li onclick="navigate(event, 'preferences')">Preferences</li>
+      <li onclick="navigate(event, 'modes')">Modes</li>
+      <li onclick="navigate(event, 'help')">Help Center</li>
+      <li onclick="alert('Signing out...')">Sign out</li>
+    </ul>
+    <div class="user-info">
+      <div class="sidebar-pic" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: #ddd; display: flex; align-items: center; justify-content: center;">
+        <img id="sidebarProfileImg" src="" alt="Sidebar Profile" style="width: 100%; height: 100%; object-fit: cover; display: none;" />
+        <span id="sidebarProfilePlaceholder" style="font-size: 20px; color: #888;">👤</span>
+      </div>
+      <div style="font-size: 14px;">
+        <strong id="sidebarName">Lizette Macalindol</strong><br />
+        <small id="sidebarEmail">lizette.macalindol@gmail.com</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Edit Profile Form -->
+    <form id="profileForm">
+      <h2 style="text-align: center;">Edit Profile</h2>
+      <div class="profile-image">
+        <img id="profileImage" alt="Profile" />
+        <span id="profilePlaceholder" style="font-size: 48px; color: #aaa;">👤</span>
+      </div>
+      <label for="upload">Upload your photo</label>
+      <input type="file" id="upload" accept="image/png, image/jpeg" />
+
+      <label for="name">Full Name</label>
+      <input type="text" id="name" />
+      <div class="error" id="errorName"></div>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" />
+      <div class="error" id="errorEmail"></div>
+
+      <label for="phone">Phone</label>
+      <input type="tel" id="phone" />
+      <div class="error" id="errorPhone"></div>
+
+      <label for="country">Country</label>
+      <select id="country">
+        <option value="">-- Select Country --</option>
+        <option value="PH">Philippines</option>
+        <option value="US">United States</option>
+        <option value="UK">United Kingdom</option>
+      </select>
+      <div class="error" id="errorCountry"></div>
+
+      <label for="bio">Bio</label>
+      <textarea id="bio" rows="4"></textarea>
+      <div class="error" id="errorBio"></div>
+
+      <button type="submit">Save</button>
+    </form>
+
+    <!-- Help Center Section -->
+    <div class="help-center" id="helpCenterSection">
+      <h2>Help Center</h2>
+      <p>If you need assistance, explore the following options:</p>
+      <ul>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">How to edit your profile</a></li>
+        <li><a href="#">How to change preferences</a></li>
+        <li><a href="#">Contact Support</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function navigate(event, page) {
+      const editForm = document.getElementById('profileForm');
+      const helpCenter = document.getElementById('helpCenterSection');
+      
+      // Hide all sections
+      editForm.style.display = 'none';
+      helpCenter.style.display = 'none';
+
+      // Show the relevant section based on the page selected
+      if (page === 'edit') {
+        editForm.style.display = 'block';
+      } else if (page === 'help') {
+        helpCenter.style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>

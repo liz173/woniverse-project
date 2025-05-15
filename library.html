@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Woniverse Library</title>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f1eff5;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.dark-mode {
+      background-color: #1e1e1e;
+      color: #f1eff5;
+    }
+
+    nav {
+      background: white;
+      padding: 15px 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    body.dark-mode nav {
+      background-color: #2a2a2a;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .nav-left img {
+      height: 50px;
+    }
+
+    .nav-left a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+
+    body.dark-mode .nav-left a {
+      color: #f1eff5;
+    }
+
+    .nav-left a:hover {
+      color: #7d5a50;
+    }
+
+    .settings-menu {
+      position: relative;
+    }
+
+    .settings-btn {
+      background: none;
+      border: none;
+      font-size: 16px;
+      font-weight: 500;
+      color: #333;
+      cursor: pointer;
+    }
+
+    body.dark-mode .settings-btn {
+      color: #f1eff5;
+    }
+
+    .settings-btn:hover {
+      color: #7d5a50;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 50px;
+      width: 250px;
+      background: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      padding: 10px;
+      z-index: 1000;
+    }
+
+    body.dark-mode .dropdown {
+      background-color: #2a2a2a;
+      color: #fff;
+    }
+
+    .dropdown .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .dropdown .user-info img {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+    }
+
+    .dropdown .user-info p {
+      font-size: 12px;
+      color: #666;
+    }
+
+    body.dark-mode .dropdown .user-info p {
+      color: #ccc;
+    }
+
+    .dropdown ul {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0 0 0;
+    }
+
+    .dropdown ul li {
+      padding: 8px 10px;
+      cursor: pointer;
+    }
+
+    .dropdown ul li a, .dropdown ul li span {
+      text-decoration: none;
+      color: #333;
+      display: block;
+    }
+
+    body.dark-mode .dropdown ul li a {
+      color: #f1eff5;
+    }
+
+    .dropdown ul li:hover {
+      background-color: #f0f0f0;
+    }
+
+    body.dark-mode .dropdown ul li:hover {
+      background-color: #3a3a3a;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 20px;
+      margin-left: 10px;
+    }
+
+    .switch input { opacity: 0; width: 0; height: 0; }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #ccc;
+      border-radius: 20px;
+      transition: 0.4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 3px;
+      bottom: 3px;
+      background-color: rgb(253, 253, 253);
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #7d5a50;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    .genre-select {
+      margin: 30px 40px;
+    }
+
+    select {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    
+    .book-collection {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 5fr));
+      gap: 10px;
+      padding: 0 20px 10px 10px;
+    }
+
+    .book-card {
+      background: rgb(255, 255, 255);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      padding: 0px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      
+    }
+
+    .book-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .book-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+    }
+
+    .book-card h4 {
+      margin: 5px 0 2px 0;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .book-card p {
+      font-size: 13px;
+      color: #666;
+      padding: 0 5px 10px 5px;
+    }
+
+    @media (max-width: 10px) {
+      nav { flex-direction: column; align-items: flex-start; }
+      .book-collection { padding: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-left">
+      <img src="https://www.pngall.com/wp-content/uploads/4/W-PNG-Clipart.png" />
+      <a href="home.html">Home</a>
+      <a href="library.html">Library</a>
+      <a href="aboutus.html">About Us</a>
+      <a href="feedback.html">Feedback</a>
+    </div>
+    <div class="settings-menu">
+      <button class="settings-btn" onclick="toggleDropdown()">⚙️ Settings</button>
+      <div class="dropdown" id="settingsDropdown">
+        <div class="user-info">
+          <img id="profilePic" src=" " alt="Profile Picture">
+          <div>
+            <strong id="profileName">User</strong>
+            <p id="profileEmail">email@example.com</p>
+          </div>
+        </div>
+        <ul>
+          <li><a href="settings.html">📝 Edit profile</a></li>
+          <li><a href="settings.html">⚙️ Preferences</a></li>
+          <li><a href="#" onclick="toggleNightMode()">🌙 Night Mode</a></li>
+          <li><a href="settings.html">❓ Help Center</a></li>
+          <li><a href="settings.html">🚪 Sign out</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="genre-select">
+    <label for="genre">Genre:</label>
+    <select id="genre">
+      <option value="all">All</option>
+      <option value="romance">Romance</option>
+      <option value="thriller">Thriller</option>
+      <option value="action">Action</option>
+      <option value="mystery">Mystery</option>
+    </select>
+  </div>
+
+  <section class="book-collection">
+    <a href="preview-lady-bodyguard.html" class="book-card" data-genre="romance">
+      <img src="https://private-user-images.githubusercontent.com/187833159/442475638-d3fe6e2e-6995-40db-b5df-c8378ae0cecd.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDY5MzgzNjEsIm5iZiI6MTc0NjkzODA2MSwicGF0aCI6Ii8xODc4MzMxNTkvNDQyNDc1NjM4LWQzZmU2ZTJlLTY5OTUtNDBkYi1iNWRmLWM4Mzc4YWUwY2VjZC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNTExJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDUxMVQwNDM0MjFaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT01Y2FhYTQwMzAyZGQ3MTU2OTE0YWY0NGI2NjY1MzA0OWE2OGQxYzk2OTNjM2RiYjNjY2YwZjQ5ZTc3MjQ2MTRiJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.Bcl0tYModG0Z_iBHmcITTGtb4WiUk1N2TWYKTpabIYg" alt="Cover of Lady Bodyguard">
+      <h4>Lady Bodyguard</h4>
+      <p>Written by: Woniverse</p>
+    </a>
+
+    <a href="preview-the-tangled.vows.html" class="book-card" data-genre="romance">
+      <img src="https://private-user-images.githubusercontent.com/187833159/442473609-3be9d63e-0a35-4c67-8885-9aa9dcd78a79.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDY5MzczNDAsIm5iZiI6MTc0NjkzNzA0MCwicGF0aCI6Ii8xODc4MzMxNTkvNDQyNDczNjA5LTNiZTlkNjNlLTBhMzUtNGM2Ny04ODg1LTlhYTlkY2Q3OGE3OS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNTExJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDUxMVQwNDE3MjBaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1lOGQ2N2JmZDA1NzA5ZTRlZTIxY2E3NTZkZDg2Njg1ZjlmOGM0N2ZlYzdhOTJhY2NjZDhhMzQ5Y2QzYTg1MjY4JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.mIQWxrqORTHtVfq3_NAglBkUZvXq7x-UgZf0V11PyhQ" alt="Cover of Tangled Vows">
+      <h4>Tangled Vows</h4>
+      <p>Written by: Woniverse</p>
+    </a>
+
+    <a href="preview-undercover.html" class="book-card" data-genre="action">
+      <img src="https://private-user-images.githubusercontent.com/187833159/442473651-67a715e6-27fa-4467-a880-a91e4be492d6.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDY5Mzc5MDcsIm5iZiI6MTc0NjkzNzYwNywicGF0aCI6Ii8xODc4MzMxNTkvNDQyNDczNjUxLTY3YTcxNWU2LTI3ZmEtNDQ2Ny1hODgwLWE5MWU0YmU0OTJkNi5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNTExJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDUxMVQwNDI2NDdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1hNmQ3MGQyYjkzNTRiNmM2Nzg5NDI1MThmYmUyZjdlZDViMzMzOWU5ODljYmEwZjgxOTI2OTlmNTdiNjQzNWJiJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.cSrC1t7uJrae52Z3I8qLtczbd28FIRUj24nzomahSHw" alt="Cover of The Undercover">
+      <h4>The Undercover</h4>
+      <p>Written by: Woniverse</p>
+    </a>
+    
+    <a href="preview-when-we-meet-again.html" class="book-card" data-genre="romance">
+      <img src="https://private-user-images.githubusercontent.com/187833159/442473828-6b512f9e-8ba9-460e-a37d-73ab605bdc36.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDY5MzY5MjUsIm5iZiI6MTc0NjkzNjYyNSwicGF0aCI6Ii8xODc4MzMxNTkvNDQyNDczODI4LTZiNTEyZjllLThiYTktNDYwZS1hMzdkLTczYWI2MDViZGMzNi5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNTExJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDUxMVQwNDEwMjVaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0zZDY1NDRkYjQ3OWZjODgxNjQwYThkMzExZDQxNmIyODNlNDM4ZDEyNDYzZmM3YWU4ZWFiMmQyODUxYWZhZDc5JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.VAWaFOojGpBKdMPaTEY7z2UWN-gPrHwQL94cdjGiE5E" alt="Cover of wwma">
+      <h4>When we meet again</h4>
+      <p>Written by: Woniverse</p>
+    </a>
+
+    <a href="preview-ruin-me-slowly.html" class="book-card" data-genre="action">
+      <img src="https://private-user-images.githubusercontent.com/187833159/442473614-675e834e-4c3d-476a-9197-28f10fb3b35d.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDY5MzczNDAsIm5iZiI6MTc0NjkzNzA0MCwicGF0aCI6Ii8xODc4MzMxNTkvNDQyNDczNjE0LTY3NWU4MzRlLTRjM2QtNDc2YS05MTk3LTI4ZjEwZmIzYjM1ZC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNTExJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDUxMVQwNDE3MjBaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1hMTFhNWYwY2UyZGJlMWM4OTUyNzE0ZDRhYjE0NzYyZWZjODUwY2VjMzM5NGRlOTg3MTZkYWIwMmZjYzc0NGZjJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.Ppi6nQz3RfWpWJoHwDyG0Ho5Db9XRbEjaUe5bqDefN0" alt="Cover of Ruin Me Slowly">
+      <h4>Ruin Me Slowly</h4>
+      <p>Written by: Woniverse</p>
+    </a>
+    </section>
+
+    <section class="book-collection">
+    
+      <a href="preview-my-name-is-death.html" class="book-card" data-genre="thriller">
+      <img src="https://private-user-images.githubusercontent.com/187833159/442473605-87b2c6e6-6399-4e97-87b2-571a167bf069.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDY5MzczNDAsIm5iZiI6MTc0NjkzNzA0MCwicGF0aCI6Ii8xODc4MzMxNTkvNDQyNDczNjA1LTg3YjJjNmU2LTYzOTktNGU5Ny04N2IyLTU3MWExNjdiZjA2OS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNTExJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDUxMVQwNDE3MjBaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0wZjQ2OWZmNDMxNThmODIzNmY1MjFkMTMxNjMyNzU2NzYzYzc5MWZhMmYzMDQ0ODE2YjRjYjM1ODI4NjA3YTUzJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.k9IXodvG-nWqc09B_HG63_c3MeeoioH5jW82Ddwqiyw" alt="Cover of MNID">
+      <h4>My Name is Death</h4>
+      <p>Written by: Woniverse</p>
+    </a>
+
+    <a href="preview-good-girls.html" class="book-card" data-genre="thriller">
+      <img src="https://private-user-images.githubusercontent.com/187833159/442473660-214e3436-c5da-41d1-9e5b-48f1e50003ca.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDY5Mzc5MDcsIm5iZiI6MTc0NjkzNzYwNywicGF0aCI6Ii8xODc4MzMxNTkvNDQyNDczNjYwLTIxNGUzNDM2LWM1ZGEtNDFkMS05ZTViLTQ4ZjFlNTAwMDNjYS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNTExJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDUxMVQwNDI2NDdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT03MjhkNjM1M2IwOGNjMWVkZWI0NzMyYTI2YzE5MWU2N2ZhNWRjMTU0MDI0YjEwNWY3Yjc5NmI5NTE1ZTAwNGY1JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.MjOK2-33f-EyggDol9uSLCxFvUp-ji0YytgNtfIREA4" alt="Cover of Good Girls">
+      <h4>Good Girls</h4>
+      <p>Written by: Woniverse</p>
+    </a>
+
+    <a href="preview-it-can't-be-real.html" class="book-card" data-genre="mystery">
+      <img src="https://private-user-images.githubusercontent.com/187833159/442473604-17c62c92-cd25-474f-9b54-dc5c6c9a459d.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDY5MzczNDAsIm5iZiI6MTc0NjkzNzA0MCwicGF0aCI6Ii8xODc4MzMxNTkvNDQyNDczNjA0LTE3YzYyYzkyLWNkMjUtNDc0Zi05YjU0LWRjNWM2YzlhNDU5ZC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNTExJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDUxMVQwNDE3MjBaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0xNzIxZWUzY2QwOGViNzgwNjZmN2E4NjFmOTMzZmEyNzQyMDk2ZDQ2MGJlYTQyOWZlNzcxMzA0NWZjYmYxZmE4JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.vSoMW9W5rXdZ6I3JqH06UxNya6QJVyxvrs2bm5AweCM" alt="Cover of Icbr">
+      <h4>It can't be Real</h4>
+      <p>Written by: Woniverse</p>
+    </a>
+
+    <a href="preview-till-death.html" class="book-card" data-genre="mystery">
+      <img src="https://private-user-images.githubusercontent.com/187833159/442473646-47860877-988a-4f30-bef5-38a78804d9a9.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDY5Mzc5MDcsIm5iZiI6MTc0NjkzNzYwNywicGF0aCI6Ii8xODc4MzMxNTkvNDQyNDczNjQ2LTQ3ODYwODc3LTk4OGEtNGYzMC1iZWY1LTM4YTc4ODA0ZDlhOS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNTExJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDUxMVQwNDI2NDdaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT02ZGNiZjFhMWM2NDEwYzlmNDBhYzAxMGMyZmQ3N2MyNDkwZDdkMzVjMTgzZDQyYjkzZTNhYzVmMmFkOTMwNmVhJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.yL10_LYx95axt8Z0LzvXqgnUS7BnBpq3H3oaQSKxgpU" alt="Cover of Till Death">
+      <h4>Till Lies Do us Part</h4>
+      <p>Written by: Woniverse</p>
+    </a>
+  </section>
+
+  <script>
+    function toggleDropdown() {
+      const dropdown = document.getElementById("settingsDropdown");
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    }
+
+    function toggleNightMode() {
+      document.body.classList.toggle("dark-mode");
+    }
+
+    document.addEventListener('click', function (event) {
+      const isInside = document.querySelector('.settings-menu').contains(event.target);
+      if (!isInside) {
+        document.getElementById("settingsDropdown").style.display = "none";
+      }
+    });
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const data = JSON.parse(localStorage.getItem("profileData"));
+      if (data) {
+        document.getElementById("profilePic").src = data.image || "https://i.pravatar.cc/40";
+        document.getElementById("profileName").textContent = data.name || "User";
+        document.getElementById("profileEmail").textContent = data.email || "email@example.com";
+      }
+
+      const genreSelect = document.getElementById("genre");
+      const books = document.querySelectorAll(".book-card");
+
+      genreSelect.addEventListener("change", () => {
+        const selectedGenre = genreSelect.value;
+
+        books.forEach(book => {
+          const genre = book.getAttribute("data-genre");
+          if (selectedGenre === "all" || genre === selectedGenre) {
+            book.style.display = "block";
+          } else {
+            book.style.display = "none";
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

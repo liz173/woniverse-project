@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Feedback - Woniverse</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f2f0f7;
+      transition: background-color 0.3s ease;
+    }
+
+    nav {
+      background: white;
+      padding: 15px 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      position: relative;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .nav-left img {
+      height: 40px;
+    }
+
+    .nav-links a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .nav-links a.active::after {
+      content: "";
+      display: block;
+      height: 2px;
+      background-color: #333;
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+    }
+
+    .settings-menu {
+      position: relative;
+    }
+
+    .settings-btn {
+      background: none;
+      border: none;
+      font-size: 16px;
+      font-weight: 500;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 48px;
+      width: 260px;
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      border-radius: 12px;
+      padding: 16px;
+      z-index: 1000;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .user-info img {
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border: 2px solid #7c6655;
+    }
+
+    .user-info strong {
+      font-size: 15px;
+    }
+
+    .user-info p {
+      font-size: 13px;
+      color: #666;
+      margin: 0;
+    }
+
+    .dropdown ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .dropdown ul li {
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: #973e3e;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .dropdown ul li:hover {
+      background-color: #f1f1f1;
+    }
+
+    .dropdown ul li a {
+      color: inherit;
+      text-decoration: none;
+      flex: 1;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 38px;
+      height: 20px;
+      margin-left: auto;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      border-radius: 20px;
+      transition: 0.4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      border-radius: 50%;
+      transition: 0.4s;
+    }
+
+    input:checked + .slider {
+      background-color: #7d5a50;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(18px);
+    }
+
+    .feedback-banner {
+      background: linear-gradient(to right, #1a1a1a 50%, #7c6655 50%);
+      color: #fff;
+      padding: 50px 0;
+      text-align: center;
+    }
+
+    .feedback-banner h1 {
+      font-size: 72px;
+      margin: 0;
+      font-weight: 800;
+    }
+
+    .feedback-container {
+      max-width: 700px;
+      margin: 40px auto;
+      background-color: #fff;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      border-radius: 8px;
+      padding: 24px;
+      transition: background-color 0.3s ease;
+    }
+
+    .feedback-header {
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      padding-bottom: 10px;
+    }
+
+    .emoji-selection {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin: 15px 0;
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    .emoji-selection span {
+      filter: grayscale(70%);
+      transition: all 0.2s ease;
+    }
+
+    .emoji-selection span.selected {
+      filter: grayscale(0%);
+      transform: scale(1.2);
+    }
+
+    textarea {
+      width: 97%;
+      height: 120px;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      resize: none;
+      font-size: 14px;
+      background-color: #f5f5f5;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body.dark-mode {
+      background-color: #121212;
+      color: #eee;
+    }
+
+    .feedback-container.dark-feedback {
+      background-color: #4e2a2a;
+    }
+
+    .feedback-banner.dark-banner {
+      background: linear-gradient(to right, #333 50%, #5a4d42 50%);
+    }
+    
+    textarea.dark-textarea {
+      background-color: #2a2a2a;
+      color: #7c6655;
+      border-color: #444;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-left">
+      <img src="https://private-user-images.githubusercontent.com/187833159/442473620-ca565014-2b53-4eb5-b4c5-3f7d48862ab7.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDY5MzczNDAsIm5iZiI6MTc0NjkzNzA0MCwicGF0aCI6Ii8xODc4MzMxNTkvNDQyNDczNjIwLWNhNTY1MDE0LTJiNTMtNGViNS1iNGM1LTNmN2Q0ODg2MmFiNy5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNTExJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDUxMVQwNDE3MjBaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0wYTQ1NjIyY2NmZjU1NThlMzkwNGZiMTkyNTE4NDQxNDlkMzVjOWFkZmJhMjA4NjljZTRiYzEyNTViMTI3ZWYwJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.W1xFADe7i6YKRjrO1eE_IdM7oRYKN7WXhPTrzUJM-a4" />
+      <div class="nav-links">
+        <a href="home.html">Home</a>
+        <a href="library.html">Library</a>
+        <a href="aboutus.html">About Us</a>
+        <a href="feedback.html" class="active">Feedback</a>
+      </div>
+    </div>
+    <div class="settings-menu">
+      <button class="settings-btn" onclick="toggleDropdown()">⚙️ Settings</button>
+      <div class="dropdown" id="settingsDropdown">
+        <div class="user-info">
+          <img id="profilePic" src="https://i.pravatar.cc/40" alt="Profile Picture">
+          <div>
+            <strong id="profileName">Your Name</strong>
+            <p id="profileEmail">youremail@example.com</p>
+          </div>
+        </div>
+        <ul>
+          <li><a href="settings.html">📝 Edit profile</a></li>
+          <li><a href="settings.html">⚙️ Preferences</a></li>
+          <li><a href="settings.html" onclick="toggleNightMode()">🌙 Night Mode</a></li>
+          <li><a href="settings.html">❓ Help Center</a></li>
+          <li><a href="settings.html">🚪 Sign out</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="feedback-banner" id="feedbackBanner">
+    <h1>FEEDBACK</h1>
+  </div>
+
+  <div class="feedback-container" id="feedbackContainer">
+    <div class="feedback-header">Feedback</div>
+    <div class="emoji-selection">
+      <span onclick="selectEmoji(this)">😞</span>
+      <span onclick="selectEmoji(this)">😐</span>
+      <span onclick="selectEmoji(this)" class="selected">😊</span>
+    </div>
+    <label for="feedback"><strong>Care to share more</strong></label>
+    <textarea id="feedback" placeholder="Type your feedbacks"></textarea>
+    <button onclick="submitFeedback()">Submit</button>
+  </div>
+
+  <script>
+    function toggleDropdown() {
+      const dropdown = document.getElementById("settingsDropdown");
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    }
+
+    function toggleNightMode() {
+      document.body.classList.toggle("dark-mode");
+      document.getElementById("feedbackContainer").classList.toggle("dark-feedback");
+      document.getElementById("feedbackBanner").classList.toggle("dark-banner");
+      document.getElementById("feedback").classList.toggle("dark-textarea");
+    }
+
+    function selectEmoji(element) {
+      const emojis = document.querySelectorAll('.emoji-selection span');
+      emojis.forEach(e => e.classList.remove('selected'));
+      element.classList.add('selected');
+    }
+
+    function submitFeedback() {
+      const feedback = document.getElementById('feedback').value;
+      const selectedEmoji = document.querySelector('.emoji-selection .selected').textContent;
+      alert(`Thanks for your feedback!\nMood: ${selectedEmoji}\nMessage: ${feedback}`);
+      document.getElementById('feedback').value = '';
+    }
+
+    // Load profile info from localStorage
+    window.addEventListener("DOMContentLoaded", () => {
+      const data = JSON.parse(localStorage.getItem("profileData"));
+      if (data) {
+        document.getElementById("profilePic").src = data.image || "https://i.pravatar.cc/40";
+        document.getElementById("profileName").textContent = data.name || "Your Name";
+        document.getElementById("profileEmail").textContent = data.email || "youremail@example.com";
+      }
+    });
+
+    document.addEventListener('click', function (event) {
+      const isInside = document.querySelector('.settings-menu').contains(event.target);
+      if (!isInside) {
+        document.getElementById("settingsDropdown").style.display = "none";
+      }
+    });
+  </script>
+
+</body>
+</html>

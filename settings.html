@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile Settings</title>
+  <style>
+      * {
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        margin: 0;
+        background-color: #f7f6fb;
+        display: flex;
+        height: 100vh;
+        color: #7d5a50;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      .sidebar {
+        width: 250px;
+        background-color: #7d5a50;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 20px;
+      }
+
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .sidebar li {
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+
+      .sidebar li:hover,
+      .sidebar li.active {
+        background-color: #92685c;
+      }
+
+      .user-info {
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding-top: 20px;
+        border-top: 1px solid #7d5a50;
+      }
+
+      .container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 40px;
+        overflow-y: auto;
+      }
+
+      form {
+        width: 100%;
+        max-width: 500px;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.804);
+        margin-bottom: 20px;
+        transition: background 0.3s, color 0.3s;
+      }
+
+      .profile-image {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        overflow: hidden;
+        background-color: #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+      }
+
+      .profile-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: none;
+      }
+
+      form input,
+      form select,
+      form textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      form label {
+        font-weight: bold;
+        margin-top: 10px;
+        display: block;
+      }
+
+      form button {
+        padding: 10px 20px;
+        background-color: #7d5a50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      .error {
+        color: red;
+        font-size: 12px;
+        margin-bottom: 10px;
+      }
+
+      body.dark-mode {
+        background-color: #121212;
+        color: #f0f0f0;
+      }
+
+      body.dark-mode .sidebar {
+        background-color: #1e1e1e;
+        color: #ffffff;
+      }
+
+      body.dark-mode form {
+        background-color: #1e1e1e;
+        color: #ffffff;
+      }
+
+      body.dark-mode input,
+      body.dark-mode select,
+      body.dark-mode textarea {
+        background-color: #2a2a2a;
+        color: #ffffff;
+        border: 1px solid #444;
+      }
+
+      body.dark-mode label {
+        color: #ddd;
+      }
+
+      body.dark-mode button {
+        background-color: #7d5a50;
+        color: #fff;
+      }
+
+      body.dark-mode .error {
+        color: #ff7b7b;
+      }
+
+      /* Container to hold sidebar and main content */
+      .main-container {
+        display: flex;
+      }
+
+      /* Help Center Styling */
+      .help-center {
+        margin-left: 20%;
+        margin-right: 30%;
+        margin-bottom: 10%;
+        margin-top: 10%;
+        padding: 40px;
+        width: 80%;
+        max-width: 6000px;
+        background-color: rgb(255, 249, 249);
+        border-radius: 30px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.804);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .help-center h2 {
+        text-align: center;
+        color: #7d5a50;
+      }
+
+      .faq-item {
+        margin-bottom: 20px;
+      }
+
+      .faq-item h3 {
+        margin-bottom: 10px;
+        font-size: 18px;
+        color: #7d5a50;
+      }
+
+      .faq-item p {
+        color: #666;
+        font-size: 14px;
+      }
+    </style>
+
+</head>
+<body>
+  <div class="sidebar">
+    <ul>
+      <li class="active" onclick="navigate(event, 'edit')">Edit Profile</li>
+      <li onclick="navigate(event, 'preferences')">Preferences</li>
+      <li onclick="navigate(event, 'modes')">Modes</li>
+      <li onclick="navigate(event, 'help')">Help Center</li>
+      <li><a href="homepage_herosection.html" style="color: inherit; text-decoration: none; display: block;">Sign out</a></li>
+    </ul>
+    <div class="user-info">
+      <div class="sidebar-pic" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; background: #ddd; display: flex; align-items: center; justify-content: center;">
+        <img id="sidebarProfileImg" src="" alt="Sidebar Profile" style="width: 100%; height: 100%; object-fit: cover; display: none;" />
+        <span id="sidebarProfilePlaceholder" style="font-size: 20px; color: #888;">👤</span>
+      </div>
+      <div style="font-size: 14px;">
+        <strong id="sidebarName">Lizette Macalindol</strong><br />
+        <small id="sidebarEmail">lizette.macalindol@gmail.com</small>
+      </div>
+    </div>
+  </div>
+    
+      <a href="library.html" style="position: absolute; top: 20px; right: 20px; text-decoration: none;">
+        <button style="padding: 10px 15px; background-color: #7d5a50; color: rgb(247, 247, 247); border: none; border-radius: 50%; font-size: 20px; cursor: pointer;">
+          🡺
+        </button>
+      </a>
+
+  <div class="container">
+    <!-- Edit Profile Form -->
+    <form id="profileForm">
+      <h2 style="text-align: center;">Edit Profile</h2>
+      <div class="profile-image">
+        <img id="profileImage" alt="Profile" />
+        <span id="profilePlaceholder" style="font-size: 48px; color: #aaa;">👤</span>
+      </div>
+      <label for="upload">Upload your photo</label>
+      <input type="file" id="upload" accept="image/png, image/jpeg" />
+
+      <label for="name">Full Name</label>
+      <input type="text" id="name" />
+      <div class="error" id="errorName"></div>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" />
+      <div class="error" id="errorEmail"></div>
+
+      <label for="phone">Phone</label>
+      <input type="tel" id="phone" />
+      <div class="error" id="errorPhone"></div>
+
+      <label for="country">Country</label>
+      <select id="country">
+        <option value="">-- Select Country --</option>
+        <option value="PH">Philippines</option>
+        <option value="US">United States</option>
+        <option value="UK">United Kingdom</option>
+      </select>
+      <div class="error" id="errorCountry"></div>
+
+      <label for="bio">Bio</label>
+      <textarea id="bio" rows="4"></textarea>
+      <div class="error" id="errorBio"></div>
+
+      <button type="submit">Save</button>
+    </form>
+
+    <!-- Preferences Form -->
+    <form id="preferencesForm" style="display: none;">
+      <h2 style="text-align: center;">Preferences</h2>
+
+      <label for="language">Language</label>
+      <select id="language">
+        <option value="">-- Select Language --</option>
+        <option value="en">English</option>
+        <option value="fil">Filipino</option>
+        <option value="es">Spanish</option>
+      </select>
+
+      <label for="timezone">Time Zone</label>
+      <select id="timezone">
+        <option value="">-- Select Time Zone --</option>
+        <option value="Asia/Manila">Asia/Manila (GMT+8)</option>
+        <option value="America/New_York">America/New_York (GMT-5)</option>
+        <option value="Europe/London">Europe/London (GMT+0)</option>
+      </select>
+
+      <label for="notifications">Notifications</label>
+      <select id="notifications">
+        <option value="enabled">Enabled</option>
+        <option value="disabled">Disabled</option>
+      </select>
+
+      <button type="submit">Save Preferences</button>
+    </form>
+
+    <!-- Mode Selection Form -->
+    <form id="modeForm" style="display: none;">
+      <h2 style="text-align: center;">Display Mode</h2>
+
+      <label for="displayMode">Choose Mode</label>
+      <select id="displayMode">
+        <option value="light">Light Mode</option>
+        <option value="dark">Dark Mode</option>
+        <option value="auto">Auto (System Default)</option>
+      </select>
+
+      <button type="submit">Apply Mode</button>
+    </form>
+  </div>
+    <!-- Help Center -->
+      <div id="helpCenter" class="help-center" style="display: none;">
+        <h2>Help Center</h2>
+        <div class="faq-item">
+          <h3>How do I change my profile picture?</h3>
+          <p>Click on the "Upload your photo" button in the "Edit Profile" section and select an image from your device.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How do I change my email?</h3>
+          <p>Go to the "Edit Profile" section and enter your new email address in the "Email" field, then click "Save".</p>
+        </div>
+        <div class="faq-item">
+          <h3>What is Dark Mode?</h3>
+          <p>Dark Mode is a display setting that changes the background color to dark, making it easier on the eyes in low-light environments. You can enable it in the "Modes" section.</p>
+        </div>
+    </div>
+  </div>
+
+  <script>
+    // Toggle dropdown visibility
+    function toggleDropdown() {
+      const dropdown = document.getElementById("settingsDropdown");
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    }
+
+    // Apply theme mode from localStorage
+    function applyStoredTheme() {
+      const savedMode = localStorage.getItem("themeMode") || "system";
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+      if (savedMode === "dark" || (savedMode === "system" && prefersDark)) {
+        document.body.classList.add("dark-mode");
+        document.getElementById("nightToggle").checked = true;
+      } else {
+        document.body.classList.remove("dark-mode");
+        document.getElementById("nightToggle").checked = false;
+      }
+    }
+
+    // Toggle night mode via switch and save to localStorage
+    function toggleNightMode() {
+      const isDark = document.body.classList.toggle("dark-mode");
+      const mode = isDark ? "dark" : "light";
+      localStorage.setItem("themeMode", mode);
+      document.getElementById("nightToggle").checked = isDark;
+    }
+
+    // Close dropdown on click outside
+    document.addEventListener('click', function (event) {
+      const isInside = document.querySelector('.settings-menu').contains(event.target);
+      if (!isInside) {
+        document.getElementById("settingsDropdown").style.display = "none";
+      }
+    });
+
+    // Load profile and theme on page load
+    window.addEventListener("DOMContentLoaded", () => {
+      const data = JSON.parse(localStorage.getItem("profileData"));
+      if (data) {
+        document.getElementById("profilePic").src = data.image || "https://i.pravatar.cc/40";
+        document.getElementById("profileName").textContent = data.name || "User";
+        document.getElementById("profileEmail").textContent = data.email || "email@example.com";
+      }
+      applyStoredTheme();
+    });
+
+    // Respond to system theme changes in "system" mode
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      const mode = localStorage.getItem("themeMode") || "system";
+      if (mode === "system") applyStoredTheme();
+    });
+    const translations = {
+      en: {
+        editProfile: "Edit Profile",
+        preferences: "Preferences",
+        uploadPhoto: "Upload your photo",
+        fullName: "Full Name",
+        email: "Email",
+        phone: "Phone",
+        country: "Country",
+        bio: "Bio",
+        save: "Save",
+        language: "Language",
+        timezone: "Time Zone",
+        notifications: "Notifications",
+        savePreferences: "Save Preferences"
+      },
+      fil: {
+        editProfile: "I-edit ang Profile",
+        preferences: "Mga Kagustuhan",
+        uploadPhoto: "Mag-upload ng larawan",
+        fullName: "Buong Pangalan",
+        email: "Email",
+        phone: "Telepono",
+        country: "Bansa",
+        bio: "Talambuhay",
+        save: "I-save",
+        language: "Wika",
+        timezone: "Oras ng Rehiyon",
+        notifications: "Mga Abiso",
+        savePreferences: "I-save ang Mga Kagustuhan"
+      },
+      es: {
+        editProfile: "Editar Perfil",
+        preferences: "Preferencias",
+        uploadPhoto: "Sube tu foto",
+        fullName: "Nombre Completo",
+        email: "Correo electrónico",
+        phone: "Teléfono",
+        country: "País",
+        bio: "Biografía",
+        save: "Guardar",
+        language: "Idioma",
+        timezone: "Zona Horaria",
+        notifications: "Notificaciones",
+        savePreferences: "Guardar Preferencias"
+      }
+    };
+
+    function applyLanguage(lang) {
+      const t = translations[lang] || translations.en;
+      document.querySelector('#profileForm h2').textContent = t.editProfile;
+      document.querySelector('label[for="upload"]').textContent = t.uploadPhoto;
+      document.querySelector('label[for="name"]').textContent = t.fullName;
+      document.querySelector('label[for="email"]').textContent = t.email;
+      document.querySelector('label[for="phone"]').textContent = t.phone;
+      document.querySelector('label[for="country"]').textContent = t.country;
+      document.querySelector('label[for="bio"]').textContent = t.bio;
+      document.querySelector('#profileForm button').textContent = t.save;
+      document.querySelector('#preferencesForm h2').textContent = t.preferences;
+      document.querySelector('label[for="language"]').textContent = t.language;
+      document.querySelector('label[for="timezone"]').textContent = t.timezone;
+      document.querySelector('label[for="notifications"]').textContent = t.notifications;
+      document.querySelector('#preferencesForm button').textContent = t.savePreferences;
+
+      const sidebarItems = document.querySelectorAll('.sidebar li');
+      sidebarItems[0].textContent = t.editProfile;
+      sidebarItems[1].textContent = t.preferences;
+    }
+
+    const upload = document.getElementById('upload');
+    const profileImage = document.getElementById('profileImage');
+    const profilePlaceholder = document.getElementById('profilePlaceholder');
+    const sidebarProfileImg = document.getElementById('sidebarProfileImg');
+    const sidebarProfilePlaceholder = document.getElementById('sidebarProfilePlaceholder');
+    const sidebarName = document.getElementById('sidebarName');
+    const sidebarEmail = document.getElementById('sidebarEmail');
+
+    let uploadedImageData = '';
+
+    upload.addEventListener('change', function (event) {
+      const file = event.target.files[0];
+      if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          uploadedImageData = e.target.result;
+          profileImage.src = uploadedImageData;
+          profileImage.style.display = 'block';
+          profilePlaceholder.style.display = 'none';
+          sidebarProfileImg.src = uploadedImageData;
+          sidebarProfileImg.style.display = 'block';
+          sidebarProfilePlaceholder.style.display = 'none';
+
+          const savedProfile = JSON.parse(localStorage.getItem('profileData')) || {};
+          savedProfile.image = uploadedImageData;
+          localStorage.setItem('profileData', JSON.stringify(savedProfile));
+        };
+        reader.readAsDataURL(file);
+      } else {
+        alert('Please select a valid image (PNG or JPG).');
+      }
+    });
+
+    function navigate(event, page) {
+      const editForm = document.getElementById('profileForm');
+      const prefForm = document.getElementById('preferencesForm');
+      const modeForm = document.getElementById('modeForm');
+      const helpCenter = document.getElementById('helpCenter');
+
+      document.querySelectorAll('.sidebar li').forEach(li => li.classList.remove('active'));
+      event.target.classList.add('active');
+
+      editForm.style.display = page === 'edit' ? 'block' : 'none';
+      prefForm.style.display = page === 'preferences' ? 'block' : 'none';
+      modeForm.style.display = page === 'modes' ? 'block' : 'none';
+      helpCenter.style.display = page === 'help' ? 'block' : 'none';
+
+      if (page === 'preferences') loadPreferences();
+      if (page === 'modes') loadMode();
+    }
+
+    document.getElementById('preferencesForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const language = document.getElementById('language').value;
+      const timezone = document.getElementById('timezone').value;
+      const notifications = document.getElementById('notifications').value;
+
+      const prefs = { language, timezone, notifications };
+      localStorage.setItem('prefs', JSON.stringify(prefs));
+
+      applyLanguage(language);
+      alert('Preferences saved successfully!');
+    });
+
+    document.getElementById('modeForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const selectedMode = document.getElementById('displayMode').value;
+      localStorage.setItem('displayMode', selectedMode);
+      applyMode(selectedMode);
+      alert('Display mode applied!');
+    });
+
+    function applyMode(mode) {
+      document.body.classList.remove('dark-mode');
+
+      if (mode === 'dark') {
+        document.body.classList.add('dark-mode');
+      } else if (mode === 'light') {
+        // No extra class needed for light
+      } else {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        applyMode(prefersDark ? 'dark' : 'light');
+      }
+    }
+
+
+    function loadMode() {
+      const savedMode = localStorage.getItem('displayMode') || 'auto';
+      document.getElementById('displayMode').value = savedMode;
+      applyMode(savedMode);
+    }
+
+    function loadPreferences() {
+      const saved = localStorage.getItem('prefs');
+      if (saved) {
+        const data = JSON.parse(saved);
+        document.getElementById('language').value = data.language || '';
+        document.getElementById('timezone').value = data.timezone || '';
+        document.getElementById('notifications').value = data.notifications || 'enabled';
+        applyLanguage(data.language);
+      }
+    }
+
+    function loadProfileData() {
+      const saved = localStorage.getItem('profileData');
+      if (saved) {
+        const data = JSON.parse(saved);
+        document.getElementById('name').value = data.name || '';
+        document.getElementById('email').value = data.email || '';
+        document.getElementById('phone').value = data.phone || '';
+        document.getElementById('country').value = data.country || '';
+        document.getElementById('bio').value = data.bio || '';
+
+        sidebarName.textContent = data.name || 'Your Name';
+        sidebarEmail.textContent = data.email || 'your@email.com';
+
+        if (data.image) {
+          uploadedImageData = data.image;
+          profileImage.src = data.image;
+          profileImage.style.display = 'block';
+          profilePlaceholder.style.display = 'none';
+          sidebarProfileImg.src = data.image;
+          sidebarProfileImg.style.display = 'block';
+          sidebarProfilePlaceholder.style.display = 'none';
+        }
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadPreferences();
+      loadProfileData();
+      loadMode();
+    });
+  </script>
+</body>
+</html>

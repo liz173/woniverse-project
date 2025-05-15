@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Woniverse</title>
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden; /* Prevent scrolling */
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f1eff5;
+    }
+
+    nav {
+      background: white;
+      padding: 15px 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .nav-left img {
+      height: 40px;
+    }
+
+    .nav-left a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .nav-left a:hover {
+      color: #7d5a50;
+    }
+
+    .nav-right {
+      display: flex;
+      gap: 10px;
+    }
+
+    .nav-btn {
+      background: #7d5a50;
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+    }
+
+    .hero {
+      background: url('https://wallpaperaccess.com/full/2862101.jpg') center/cover no-repeat;
+      min-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-size: 90px;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 800;
+      margin-bottom: 15px;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+    }
+
+    .hero p {
+      font-size: 16px;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .hero a.hero-btn {
+      background-color: #c6a650;
+      color: white;
+      text-decoration: none;
+      padding: 12px 24px;
+      font-size: 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .genre-select {
+      margin: 30px 40px;
+    }
+
+    select {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    .book-collection {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 30px;
+      padding: 0 40px 40px 40px;
+    }
+
+    .book-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      padding: 10px;
+    }
+
+    .book-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+    }
+
+    .book-card h4 {
+      margin: 10px 0 5px 0;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .book-card p {
+      font-size: 13px;
+      color: #666;
+      padding: 0 5px 10px 5px;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .book-collection {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-left">
+      <img src="https://www.pngall.com/wp-content/uploads/4/W-PNG-Clipart.png" alt="Woniverse Logo" />
+    </div>
+    <div class="nav-right">
+      <a href="signup.html" class="nav-btn">📝 Sign Up</a>
+      <a href="signin.html" class="nav-btn">🔐 Sign In</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h1>Welcome to Woniverse!</h1>
+    <p>Discover the world through my stories</p>
+    <a href="signup.html" class="hero-btn">Join us now</a>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      if (!isLoggedIn) {
+        // Hide Home, Library, and Feedback if not logged in
+        document.getElementById('home-link').style.display = 'none';
+        document.getElementById('library-link').style.display = 'none';
+        document.getElementById('feedback-link').style.display = 'none';
+      }
+    });
+  </script>
+
+</body>
+</html>
